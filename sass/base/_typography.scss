@@ -1,0 +1,18 @@
+body {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-size: $default-font-size;
+  line-height: 1.7;
+}
+
+.landing {
+  text-align: center;
+
+  &--header {
+    font-family: "Dancing Script", cursive;
+  }
+
+  &--intro {
+    margin-bottom: 50px;
+  }
+}
