@@ -2,10 +2,6 @@
 
 Capable of visualizing Dijkstra, A\*, Greedy-Best-First search, and BFS. Inspired by Clément Mihailescu's youtube video.
 
-# algorithm_visualizer,
-
-> A Vue.js project
-
 ## Build Setup
 
 ```bash
