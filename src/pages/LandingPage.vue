@@ -11,16 +11,14 @@
       </p>
     </div>
     <div class="rules">
-      <div class="clear">
+      <div class="group-1">
         <div class="rules-1">
           <h3>Endpoints</h3>
           <p>
             The green sphere in the board indicates the start, whereas the red sphere indicates the target square.
             Each algorithm will try to find the shortest path connecting the start square to the target square.
           </p>
-          <div class="rules-1-image">
-            <img src="../../assets/start_end.png" alt />
-          </div>
+          <img src="../../assets/start_end.png" alt />
         </div>
 
         <div class="rules-2">
@@ -34,26 +32,20 @@
             to green, red, or black. If it is green you can add weights by clicking on the squares. If the color is red,
             you can remove a weight from the square by clicking on it. If the color is black, then you can add walls in the board.
           </p>
-          <div class="rules-2-image">
-            <img src="../../assets/navbar.png" alt />
-          </div>
+          <img src="../../assets/navbar.png" alt />
         </div>
       </div>
-      <div class="clear">
+      <div class="group-2">
         <div class="rules-3">
           <h3>Endpoints</h3>
           <p>You can drag the start or target square over the board using the mouse</p>
-          <div class="rules-3-image">
-            <img src="../../assets/endpoints.gif" alt />
-          </div>
+          <img src="../../assets/endpoints.gif" alt />
         </div>
 
         <div class="rules-4">
           <h3>Walls</h3>
           <p>When the 'Weights' button in the navbar is black, you can add walls using the mouse.</p>
-          <div class="rules-4-image">
-            <img src="../../assets/walls.gif" alt />
-          </div>
+          <img src="../../assets/walls.gif" alt />
         </div>
 
         <div class="rules-5">
@@ -63,18 +55,14 @@
             up in each node. You can add or remove weights depending on the color of the 'Weights' button.
             (max 99, min 1).
           </p>
-          <div class="rules-5-image">
-            <img src="../../assets/weights.gif" alt />
-          </div>
+          <img src="../../assets/weights.gif" alt />
         </div>
       </div>
 
       <div class="rules-6">
         <h3>Visualization example</h3>
         <p>Below there is a visualization of the A* algorithm.</p>
-        <div class="rules-6-image">
-          <img src="../../assets/astar.gif" alt />
-        </div>
+        <img src="../../assets/astar.gif" alt />
       </div>
 
       <p class="landing--close">

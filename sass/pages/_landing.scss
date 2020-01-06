@@ -9,6 +9,7 @@
     margin-bottom: 60px;
   }
 
+  // for group 1
   &-1,
   &-2 {
     float: left;
@@ -16,6 +17,7 @@
     margin: 0 1%;
   }
 
+  // for group 2
   &-3,
   &-4,
   &-5 {
@@ -42,8 +44,14 @@ a {
   }
 }
 
-.clear {
+// clear the floats
+.group-1,
+.group-2 {
   @include clearfix;
+}
+
+img {
+  margin-top: 10px;
 }
 
 #here-link {
