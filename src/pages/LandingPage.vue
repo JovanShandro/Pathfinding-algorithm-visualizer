@@ -49,7 +49,7 @@
         </div>
 
         <div class="rules-5">
-          <h3>Walls</h3>
+          <h3>Weights</h3>
           <p>
             Upon choosing a weighted algorithm (currently only Dijkstra) weights will immediately show
             up in each node. You can add or remove weights depending on the color of the 'Weights' button.
