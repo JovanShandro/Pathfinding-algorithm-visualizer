@@ -42,7 +42,7 @@
 
 <script>
 import * as R from "ramda";
-import Square from "../components/Square";
+import Square from "../components/Square.vue";
 import { bus } from "../events/eventbus";
 import { bfs } from "../algorithms/bfs";
 import { astar } from "../algorithms/astar";
