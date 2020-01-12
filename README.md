@@ -1,4 +1,4 @@
-# A Sorting Algorithms' Visualizer build using Vue.js
+# A Pathfinding Algorithms' Visualizer build using Vue.js
 
 ## Build Setup
 
@@ -11,3 +11,4 @@ npm run dev
 # build for production
 npm run build
 ```
+**Or directly play with it** [here](https://jolly-euler-ab94a9.netlify.com/)
