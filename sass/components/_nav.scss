@@ -13,6 +13,7 @@ nav {
       height: 50.1px;
       margin: 0 10px;
       cursor: pointer;
+      outline: none;
 
       &:hover {
         color: white;
@@ -30,11 +31,18 @@ nav {
       color: rgba(0, 0, 0, 0);
       text-shadow: 0 0 0 #000;
       text-align: right;
+      text-align-last: right;
 
       &:active,
       &:focus {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #000;
+      }
+
+      option {
+        background-color: gray;
+        color: white;
+        margin-top: 5px;
       }
     }
   }

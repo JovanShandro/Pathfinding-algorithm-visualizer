@@ -166,7 +166,8 @@ nav {
       text-transform: uppercase;
       height: 50.1px;
       margin: 0 10px;
-      cursor: pointer; }
+      cursor: pointer;
+      outline: none; }
       nav > span > *:hover {
         color: white; }
       nav > span > *::-moz-focus-inner {
@@ -177,10 +178,15 @@ nav {
       appearance: none;
       color: rgba(0, 0, 0, 0);
       text-shadow: 0 0 0 #000;
-      text-align: right; }
+      text-align: right;
+      text-align-last: right; }
       nav > span > select:active, nav > span > select:focus {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #000; }
+      nav > span > select option {
+        background-color: gray;
+        color: white;
+        margin-top: 5px; }
   nav > h3 {
     margin: 10px;
     float: left; }
