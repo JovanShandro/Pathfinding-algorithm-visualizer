@@ -179,12 +179,14 @@ nav {
       color: rgba(0, 0, 0, 0);
       text-shadow: 0 0 0 #000;
       text-align: right;
-      text-align-last: right; }
+      text-align-last: right;
+      width: 175px; }
       nav > span > select:active, nav > span > select:focus {
         color: rgba(0, 0, 0, 0);
         text-shadow: 0 0 0 #000; }
-      nav > span > select option {
-        background-color: gray;
+      nav > span > select > option {
+        background-color: black;
+        text-transform: capitalize;
         color: white;
         margin-top: 5px; }
   nav > h3 {
