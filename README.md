@@ -11,4 +11,4 @@ npm run dev
 # build for production
 npm run build
 ```
-**Or directly play with it** [here](https://pedantic-euclid-b4bcc4.netlify.com/)
+**Or directly play with it** [here](https://blissful-shirley-0a890a.netlify.com/)
