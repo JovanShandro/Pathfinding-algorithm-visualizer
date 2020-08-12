@@ -1,8 +1,8 @@
 import { bus } from "../events/eventbus";
+
 /*
   Animate all visited Squares in order
 */
-
 export function animateVisited(visited, shortestPath, start, target) {
   for (let i = 0; i <= visited.length; i++) {
     // If we reached the target

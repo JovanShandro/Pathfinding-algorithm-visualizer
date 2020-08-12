@@ -1,19 +1,22 @@
 <template>
   <div
     :class="{
-     'square': true,
-     'start': square.isStart , 
-     'target': square.isTarget, 
-     'visited': square.isVisited && square.makeVisible, 
-     'wall': square.isWall, 
-     'path': square.isPath}"
+      square: true,
+      start: square.isStart,
+      target: square.isTarget,
+      visited: square.isVisited && square.makeVisible,
+      wall: square.isWall,
+      path: square.isPath
+    }"
     @click="clicked"
     @mousedown="onMouseDown"
     @mouseenter="onMouseEnter"
     @mouseup="onMouseUp"
     @mouseout="onMouseOut"
-    :style="{'color': ( !weighted) ? 'transparent' : ''}"
-  >{{ (square.weight)}}</div>
+    :style="{ color: !weighted ? 'transparent' : '' }"
+  >
+    {{ square.weight }}
+  </div>
 </template>
 
 <script>

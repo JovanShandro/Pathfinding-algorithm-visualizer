@@ -16,18 +16,20 @@
         <button @click="clearBoard">Clear</button>
         <button
           @click="ctrlWeightMode"
-          :class="{ 'add': weightMode == 1, 'sub': weightMode == -1}"
-        >weights</button>
+          :class="{ add: weightMode == 1, sub: weightMode == -1 }"
+        >
+          weights
+        </button>
       </span>
     </nav>
 
-    <div class="u-mr-auto" :style="{'width': 25*cols + 'px'}">
+    <div class="u-mr-auto" :style="{ width: 25 * cols + 'px' }">
       <div v-for="row in rows" class="boardRow" :key="row">
         <Square
           v-for="col in cols"
           :key="col"
-          :square="R.path([row-1, col-1], board)"
-          :id="'square-' + (row-1) + '-' + (col-1)"
+          :square="R.path([row - 1, col - 1], board)"
+          :id="'square-' + (row - 1) + '-' + (col - 1)"
           :choice="choice"
           @add-weight="changeWeight"
           @mouse-down="handleMouseDown"
