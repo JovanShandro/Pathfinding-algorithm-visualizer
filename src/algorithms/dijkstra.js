@@ -2,6 +2,7 @@ const R = require("ramda");
 
 /*
   Returns the squares in the order they were visited by Dijkstra's algorithm
+  !! An array is used instead of a min priority queue
 */
 export function dijkstra(board, start, target) {
   // Initialization
