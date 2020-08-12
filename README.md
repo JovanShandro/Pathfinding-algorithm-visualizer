@@ -1,4 +1,5 @@
-# A Pathfinding Algorithms' Visualizer build using Vue.js
+# A Pathfinding Algorithms' Visualizer built using Vue.js
+Make sure to check it on a big screen for the best experience!
 
 ## Build Setup
 
