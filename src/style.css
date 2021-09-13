@@ -203,8 +203,9 @@ nav {
   height: 25px; }
 
 .landing {
-  height: 100%;
+  min-height: 110%;
   margin: 30px;
+  padding-bottom: 20px;
   background-color: lightgray; }
 
 .rules > *:not(:last-child) {
@@ -241,3 +242,15 @@ img {
 
 #here-link {
   color: #797676; }
+
+#action {
+  font-size: 2rem;
+  color: black;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  max-width: 200px;
+  margin: 20px auto; }
+
+#action:hover {
+  transform: scale(1.2); }

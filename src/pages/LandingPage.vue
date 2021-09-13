@@ -82,8 +82,9 @@
     </div>
 
     <router-link id="boardlink" to="/board">
-      Take me to the board
-      <i class="fas fa-arrow-right"></i>
+      <div id="action">
+        Take me to the board
+      </div>
     </router-link>
   </div>
 </template>
@@ -93,6 +94,6 @@ export default {
   name: "LandingPage",
   data() {
     return {};
-  }
+  },
 };
 </script>
