@@ -23,7 +23,7 @@
       </span>
     </nav>
 
-    <div class="u-mr-auto" :style="{ width: 25 * cols + 'px' }">
+    <div class="u-m-auto" :style="{ width: 25 * cols + 'px' }">
       <div v-for="row in rows" class="boardRow" :key="row">
         <Square
           v-for="col in cols"
@@ -55,12 +55,12 @@ import {
   onMouseEnter,
   onMouseOut,
   onMouseDown,
-  onMouseUp
+  onMouseUp,
 } from "../events/mouseEvents";
 
 export default {
   components: {
-    Square
+    Square,
   },
   data() {
     return {
@@ -74,10 +74,10 @@ export default {
         start: { row: 13, col: 13 },
         target: { row: 13, col: 23 },
         startIsPressed: false,
-        targetIsPressed: false
+        targetIsPressed: false,
       },
       weightMode: 0,
-      visualizationDone: false
+      visualizationDone: false,
     };
   },
   methods: {
@@ -180,7 +180,7 @@ export default {
             isPath: false,
             isVisited: false,
             weight: 1,
-            previousNode: null
+            previousNode: null,
           });
         }
       }
@@ -209,13 +209,13 @@ export default {
               j == R.path(["start", "col"], this.endpoints),
             isTarget:
               i == R.path(["target", "row"], this.endpoints) &&
-              j == R.path(["target", "col"], this.endpoints)
+              j == R.path(["target", "col"], this.endpoints),
           });
         }
         this.board.push(currentRow);
         this.visualizationDone = false;
       }
-    }
+    },
   },
 
   created() {
@@ -244,14 +244,14 @@ export default {
           if (this.board[i][j].isTarget) return;
           this.board[i][j].isStart = true;
           this.endpoints = R.merge(this.endpoints, {
-            start: { row: i, col: j }
+            start: { row: i, col: j },
           });
         } else if (value === "target") {
           if (this.board[i][j].isStart) return;
 
           this.board[i][j].isTarget = true;
           this.endpoints = R.merge(this.endpoints, {
-            target: { row: i, col: j }
+            target: { row: i, col: j },
           });
         }
       } else {
@@ -259,6 +259,80 @@ export default {
         else if (value === "target") this.board[i][j].isTarget = false;
       }
     });
-  }
+  },
 };
 </script>
+
+<style scoped>
+.add {
+  color: lightgreen !important;
+}
+
+.sub {
+  color: rgb(228, 164, 164) !important;
+}
+
+.boardRow {
+  height: 25px;
+  line-height: 0;
+}
+/*nav*/
+nav {
+  background-color: gray;
+}
+
+nav > span {
+  float: right;
+}
+
+nav > span > select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 0 #000;
+  text-align: right;
+  text-align-last: right;
+  width: 180px;
+}
+
+nav > span > select:active,
+nav > span > select:focus {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 0 #000;
+}
+
+nav > span > select > option {
+  background-color: black;
+  text-transform: capitalize;
+  color: white;
+  margin-top: 5px;
+}
+nav > span > * {
+  color: black;
+  background: none;
+  border: none;
+  text-transform: uppercase;
+  height: 50.1px;
+  margin: 0 10px;
+  cursor: pointer;
+  outline: none;
+}
+nav > span > *:hover {
+  color: white;
+}
+
+nav > span > *::-moz-focus-inner {
+  border: 0;
+}
+
+nav > h3 {
+  margin: 10px;
+  float: left;
+}
+nav::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+</style>

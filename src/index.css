@@ -1,0 +1,80 @@
+:root {
+  --default-font-size: 1.6rem;
+  --color-back: white;
+  --main-start-color: rgb(57, 226, 57);
+  --main-target-color: rgb(252, 73, 73);
+  --wall-color: black;
+  --square-border: steelblue;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  /* rem set to 10px for simplicity */
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: var(--color-back);
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-size: var(--default-font-size);
+  line-height: 1.7;
+}
+
+.u-m-auto {
+  margin: 0 auto;
+}
+
+@keyframes shortestPath {
+  0% {
+    transform: scale(0.6);
+    background-color: rgb(255, 254, 106);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 254, 106);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgb(255, 254, 106);
+  }
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(3, 78, 13, 0.75);
+    border-radius: 100%;
+  }
+
+  50% {
+    background-color: rgba(17, 217, 17, 0.75);
+  }
+
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(50, 247, 24, 0.75);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(141, 255, 141, 0.75);
+  }
+}
+
+
+@media only screen and (max-width: 1210px) {
+  body {
+    font-size: 1.4rem;
+  }
+}
+

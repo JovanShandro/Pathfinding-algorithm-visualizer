@@ -1,5 +1,5 @@
-import LandingPage from "../pages/LandingPage.vue";
-import Board from "../pages/Board.vue";
+import LandingPage from "./pages/LandingPage.vue";
+import Board from "./pages/Board.vue";
 
 const routes = [
   {
