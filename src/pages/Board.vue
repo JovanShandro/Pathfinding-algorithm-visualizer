@@ -28,7 +28,7 @@
         <Square
           v-for="col in cols"
           :key="col"
-          :square="R.path([row - 1, col - 1], board)"
+          :square="board[row - 1][col - 1]"
           :id="'square-' + (row - 1) + '-' + (col - 1)"
           :choice="choice"
           @add-weight="changeWeight"
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import * as R from "ramda";
 import Square from "../components/Square.vue";
 import { bus } from "../events/eventbus";
 import { bfs } from "../algorithms/bfs";
@@ -64,7 +63,6 @@ export default {
   },
   data() {
     return {
-      R,
       choice: "",
       board: [],
       rows: 40,
@@ -145,11 +143,11 @@ export default {
 
     visualize() {
       if (this.visualizationDone) this.clearBoard();
-      const start = this.board[R.path(["start", "row"], this.endpoints)][
-        R.path(["start", "col"], this.endpoints)
+      const start = this.board[this.endpoints.start.row][
+        this.endpoints.start.col
       ];
-      const target = this.board[R.path(["target", "row"], this.endpoints)][
-        R.path(["target", "col"], this.endpoints)
+      const target = this.board[this.endpoints.target.row][
+        this.endpoints.target.col
       ];
 
       // Run the algorithm
@@ -205,11 +203,11 @@ export default {
             previousNode: null,
             weight: 1,
             isStart:
-              i == R.path(["start", "row"], this.endpoints) &&
-              j == R.path(["start", "col"], this.endpoints),
+              i == this.endpoints.start.row &&
+              j == this.endpoints.start.col,
             isTarget:
-              i == R.path(["target", "row"], this.endpoints) &&
-              j == R.path(["target", "col"], this.endpoints),
+              i == this.endpoints.target.row &&
+              j == this.endpoints.target.col,
           });
         }
         this.board.push(currentRow);
@@ -243,14 +241,14 @@ export default {
         if (value === "start") {
           if (this.board[i][j].isTarget) return;
           this.board[i][j].isStart = true;
-          this.endpoints = R.merge(this.endpoints, {
+          this.endpoints = Object.assign(this.endpoints, {
             start: { row: i, col: j },
           });
         } else if (value === "target") {
           if (this.board[i][j].isStart) return;
 
           this.board[i][j].isTarget = true;
-          this.endpoints = R.merge(this.endpoints, {
+          this.endpoints = Object.assign(this.endpoints, {
             target: { row: i, col: j },
           });
         }

@@ -1,5 +1,3 @@
-const R = require("ramda");
-
 /*
     Return visited squares in order
     The alg is similar to A*, 
@@ -20,7 +18,7 @@ export function greedy(board, start, target) {
   // Main Loop
   while (open.length) {
     // Sort unvisited square by f
-    open = R.sort(R.ascend(R.prop("f")), open);
+    open.sort((a, b) => a.f - b.f);
     // Visit the closest square
     const v_visit = open.shift();
     if (v_visit.isWall) continue;
@@ -35,13 +33,13 @@ export function greedy(board, start, target) {
     const s = [];
     const { row, col } = v_visit;
     // North
-    if (row > 0) s.push(R.path([row - 1, col], board));
+    if (row > 0) s.push(board[row - 1][col]);
     // West
-    if (col > 0) s.push(R.path([row, col - 1], board));
+    if (col > 0) s.push(board[row][col - 1]);
     // South
-    if (row < board.length - 1) s.push(R.path([row + 1, col], board));
+    if (row < board.length - 1) s.push(board[row + 1][col]);
     // East
-    if (col < board[0].length - 1) s.push(R.path([row, col + 1], board));
+    if (col < board[0].length - 1) s.push(board[row][col + 1]);
     // Iterate over s
     for (const v_next of s) {
       if (v_next.isWall) continue;
@@ -49,7 +47,7 @@ export function greedy(board, start, target) {
         v_next.previousNode = v_visit;
         v_next.f = h(v_next);
         // if v_next not in open
-        if (!R.contains(v_next, open)) {
+        if (!open.includes(v_next)) {
           open.push(v_next);
         }
       }
@@ -58,6 +56,6 @@ export function greedy(board, start, target) {
   return closed;
 }
 
-const directDist = a => b => {
+const directDist = (a) => (b) => {
   return Math.hypot(Math.abs(a.row - b.row), Math.abs(a.col - b.col));
 };

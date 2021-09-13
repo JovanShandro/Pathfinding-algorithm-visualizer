@@ -1,5 +1,3 @@
-const R = require("ramda");
-
 /*
   Returns the squares in the order they were visited by Dijkstra's algorithm
   !! An array is used instead of a min priority queue
@@ -18,7 +16,8 @@ export function dijkstra(board, start, target) {
 
   while (unvisited.length) {
     // Sort unvisited square by distance
-    unvisited = R.sort(R.ascend(R.prop("distance")), unvisited);
+    //unvisited = R.sort(R.ascend(R.prop("distance")), unvisited);
+    unvisited.sort((a, b) => a.distance - b.distance)
     // Get the closest square
     const current = unvisited.shift();
     // If wall skip
@@ -34,16 +33,16 @@ export function dijkstra(board, start, target) {
     let neighbors = [];
     const { col, row } = current;
     // North
-    if (row > 0) neighbors.push(R.path([row - 1, col], board));
+    if (row > 0) neighbors.push(board[row - 1][col]);
     // West
-    if (col > 0) neighbors.push(R.path([row, col - 1], board));
+    if (col > 0) neighbors.push(board[row][col - 1]);
     // South
-    if (row < board.length - 1) neighbors.push(R.path([row + 1, col], board));
+    if (row < board.length - 1) neighbors.push(board[row + 1][col]);
     // East
     if (col < board[0].length - 1)
-      neighbors.push(R.path([row, col + 1], board));
+      neighbors.push(board[row][col + 1]);
     // Get only unvisited neighbors
-    neighbors = R.filter(neighbor => !neighbor.isVisited, neighbors);
+    neighbors = neighbors.filter(neighbor => !neighbor.isVisited)
 
     // update neighbors
     for (const neighbor of neighbors) {

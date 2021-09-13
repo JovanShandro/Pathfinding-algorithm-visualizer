@@ -1,5 +1,3 @@
-const R = require("ramda");
-
 export function bfs(board, start, target) {
   const queue = [];
   const visited = [];
@@ -31,12 +29,12 @@ export function bfs(board, start, target) {
 const adj = (u, board) => {
   const { row, col } = u;
   const adjacent = [];
-  if (row > 0) adjacent.push(R.path([row - 1, col], board));
+  if (row > 0) adjacent.push(board[row - 1][col]);
   // West
-  if (col > 0) adjacent.push(R.path([row, col - 1], board));
+  if (col > 0) adjacent.push(board[row][col - 1]);
   // South
-  if (row < board.length - 1) adjacent.push(R.path([row + 1, col], board));
+  if (row < board.length - 1) adjacent.push(board[row + 1][col]);
   // East
-  if (col < board[0].length - 1) adjacent.push(R.path([row, col + 1], board));
+  if (col < board[0].length - 1) adjacent.push(board[row][col + 1]);
   return adjacent;
 };

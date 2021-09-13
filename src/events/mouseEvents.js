@@ -1,5 +1,4 @@
 import { bus } from "./eventbus";
-const R = require("ramda");
 
 export function onMouseEnter(coordinates, board, endpoints) {
   const { row, col } = coordinates;
@@ -49,8 +48,8 @@ export function onMouseUp(coordinates, board, endpoints, newSquare) {
   const { startIsPressed, targetIsPressed } = endpoints;
   if (startIsPressed || targetIsPressed) {
     if (
-      R.path([row, col], board).isWall ||
-      R.prop(startIsPressed ? "isTarget" : "isStart")(R.path([row, col], board))
+      board[row][col].isWall ||
+      board[row][col][startIsPressed ? "isTarget" : "isStart"]
     ) {
       const { row: r, col: c } = newSquare;
 
