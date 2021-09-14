@@ -4,7 +4,7 @@
     only diff is that f is given
     by the direct distance between 
     current square to target. It is fast,
-    but optional result not guaranteed
+    but optional result is not guaranteed
 */
 
 export function greedy(board, start, target) {

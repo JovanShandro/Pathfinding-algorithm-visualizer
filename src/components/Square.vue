@@ -25,25 +25,37 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   props: {
     square: Object,
-    choice: String,
   },
   data() {
     return {
       coordinates: { row: this.square.row, col: this.square.col },
-      weighted: this.choice === "dijkstra",
+      weighted: this.algorithm === "dijkstra",
     };
   },
   computed: {
-    ...mapState(["visualizationDone", "weightMode", "mouseIsPressed"]),
+    ...mapState([
+      "visualizationDone",
+      "algorithm",
+      "weightMode",
+      "mouseIsPressed",
+      "endpoints",
+      "rows",
+      "cols",
+      "board",
+    ]),
   },
   methods: {
     ...mapMutations([
       "updateWeight",
       "setMouseIsPressed",
-      "onMouseDownHandler",
-      "onMouseUpHandler",
+      "updateEndpoints",
+      "updateSquare",
+      "updateStartOrTarget",
+      "toggleIsWall",
     ]),
-    ...mapActions(["onMouseOutHandler", "onMouseEnterHandler"]),
+    clicked() {
+      this.updateWeight(this.coordinates);
+    },
     onMouseUp() {
       if (this.visualizationDone) return;
       this.onMouseUpHandler(this.coordinates);
@@ -61,12 +73,98 @@ export default {
       this.onMouseDownHandler(this.coordinates);
       this.setMouseIsPressed(true);
     },
-    clicked() {
-      this.updateWeight(this.coordinates);
+    onMouseDownHandler() {
+      const { row, col } = this.coordinates;
+      const { start, target } = this.endpoints;
+      if (row === start.row && col === start.col) {
+        this.updateEndpoints({ startIsPressed: true });
+      } else if (row === target.row && col === target.col) {
+        this.endpoints.targetIsPressed = true;
+      } else this.toggleIsWall({ row, col });
+    },
+    onMouseUpHandler() {
+      let newSquare;
+      // Search for next empty square if mouse released in wall
+      const flag = this.endpoints.startIsPressed;
+
+      search: for (
+        let i = flag ? 0 : this.rows - 1;
+        flag ? i < this.rows : i >= 0;
+        flag ? i++ : i--
+      ) {
+        for (
+          let j = flag ? 0 : this.cols - 1;
+          flag ? j < this.cols : j >= 0;
+          flag ? j++ : j--
+        ) {
+          if (!this.board[i][j].isWall) {
+            newSquare = this.board[i][j];
+            break search;
+          }
+        }
+      }
+
+      // Update the endpoints in case one of them was moved
+      const { row, col } = this.coordinates;
+      const { startIsPressed, targetIsPressed } = this.endpoints;
+      if (startIsPressed || targetIsPressed) {
+        if (
+          this.board[row][col].isWall ||
+          this.board[row][col][startIsPressed ? "isTarget" : "isStart"]
+        ) {
+          const { row: newRow, col: newCol } = newSquare;
+
+          this.updateEndpoints({
+            [startIsPressed ? "start" : "target"]: {
+              row: newRow,
+              col: newCol,
+            },
+          });
+          this.updateSquare({
+            row: newRow,
+            col: newCol,
+            [startIsPressed ? "isStart" : "isTarget"]: true,
+          });
+        }
+      }
+      this.updateEndpoints({
+        startIsPressed: false,
+        targetIsPressed: false,
+      });
+    },
+    onMouseEnterHandler() {
+      const { row, col } = this.coordinates;
+      const { startIsPressed, targetIsPressed, start, target } = this.endpoints;
+
+      if (startIsPressed) {
+        this.updateStartOrTarget({ row, col, flag: 1, value: "start" });
+        return;
+      }
+
+      if (targetIsPressed) {
+        this.updateStartOrTarget({ row, col, flag: 1, value: "target" });
+        return;
+      }
+
+      if (
+        (row === start.row && col === start.col) ||
+        (row === target.row && col === target.col)
+      )
+        return;
+      this.toggleIsWall({ row, col });
+    },
+    onMouseOutHandler() {
+      const { row, col } = this.coordinates;
+      const { startIsPressed, targetIsPressed } = this.endpoints;
+
+      if (startIsPressed)
+        this.updateStartOrTarget({ row, col, flag: 0, value: "start" });
+      if (targetIsPressed)
+        this.updateStartOrTarget({ row, col, flag: 0, value: "target" });
     },
   },
   watch: {
-    choice: {
+    algorithm: {
       immediate: true,
       handler(val, oldVal) {
         this.weighted = val === "dijkstra";

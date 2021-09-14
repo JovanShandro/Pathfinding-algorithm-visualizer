@@ -16,8 +16,7 @@ export function dijkstra(board, start, target) {
 
   while (unvisited.length) {
     // Sort unvisited square by distance
-    //unvisited = R.sort(R.ascend(R.prop("distance")), unvisited);
-    unvisited.sort((a, b) => a.distance - b.distance)
+    unvisited.sort((a, b) => a.distance - b.distance);
     // Get the closest square
     const current = unvisited.shift();
     // If wall skip
@@ -39,10 +38,9 @@ export function dijkstra(board, start, target) {
     // South
     if (row < board.length - 1) neighbors.push(board[row + 1][col]);
     // East
-    if (col < board[0].length - 1)
-      neighbors.push(board[row][col + 1]);
+    if (col < board[0].length - 1) neighbors.push(board[row][col + 1]);
     // Get only unvisited neighbors
-    neighbors = neighbors.filter(neighbor => !neighbor.isVisited)
+    neighbors = neighbors.filter((neighbor) => !neighbor.isVisited);
 
     // update neighbors
     for (const neighbor of neighbors) {

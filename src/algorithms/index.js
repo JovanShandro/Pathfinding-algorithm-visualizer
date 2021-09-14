@@ -4,7 +4,7 @@ export * from "./astar";
 export * from "./dijkstra";
 
 /*
-  Get shortest path that lead to the target node
+  Get the path that leads to the target node
 */
 export function getPath(target) {
   const path = [];
