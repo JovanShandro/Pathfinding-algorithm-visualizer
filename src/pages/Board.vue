@@ -40,14 +40,6 @@ export default {
 </script>
 
 <style scoped>
-.add {
-  color: lightgreen !important;
-}
-
-.sub {
-  color: rgb(228, 164, 164) !important;
-}
-
 .boardRow {
   height: 25px;
   line-height: 0;

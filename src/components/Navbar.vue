@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav ref="nav">
     <h3>Enjoy playing with the Board</h3>
     <span>
       <select v-model="algorithmChoice">
@@ -10,14 +10,15 @@
         <option value="bfs">BFS</option>
       </select>
 
-      <button @click="visualize">Visualize</button>
-      <button @click="resetBoard">Reset</button>
-      <button @click="clearBoard">Clear</button>
+      <button @click="visualize"><i class="fas fa-play"></i></button>
+      <button @click="resetBoard"><i class="fas fa-redo-alt"></i></button>
+      <button @click="clearBoard"><i class="fas fa-eraser"></i></button>
       <button
+        v-if="algorithmChoice === 'dijkstra'"
         @click="updateWeightMode"
         :class="{ add: weightMode == 1, sub: weightMode == -1 }"
       >
-        weights
+        <i class="fas fa-weight-hanging"></i>
       </button>
     </span>
   </nav>
@@ -27,6 +28,11 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      isOpen: true,
+    };
+  },
   computed: {
     ...mapState(["weightMode", "algorithm"]),
     algorithmChoice: {
@@ -52,15 +58,32 @@ export default {
 
 <style scoped>
 nav {
-  background-color: gray;
+  min-width: 700px;
+  border-radius: 25px;
+  background-color: black;
+  position: fixed;
+  color: white;
+  margin: 0 auto;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 10px;
+  z-index: 1;
 }
 
- span {
+.add {
+  color: lightgreen !important;
+}
+
+.sub {
+  color: rgb(228, 164, 164) !important;
+}
+
+span {
   float: right;
 }
 
 select {
-  color: rgba(0, 0, 0, 0);
   text-shadow: 0 0 0 #000;
   text-align: right;
   text-align-last: right;
@@ -69,7 +92,6 @@ select {
 
 select:active,
 select:focus {
-  color: rgba(0, 0, 0, 0);
   text-shadow: 0 0 0 #000;
 }
 
@@ -81,7 +103,7 @@ option {
 }
 
 span > * {
-  color: black;
+  color: white;
   background: none;
   border: none;
   text-transform: uppercase;
@@ -107,5 +129,12 @@ nav::after {
   content: "";
   display: block;
   clear: both;
+}
+.add {
+  color: lightgreen !important;
+}
+
+.sub {
+  color: rgb(228, 164, 164) !important;
 }
 </style>
