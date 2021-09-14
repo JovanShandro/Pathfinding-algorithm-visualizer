@@ -1,8 +1,4 @@
-import { bfs } from "./algorithms/bfs";
-import { astar } from "./algorithms/astar";
-import { greedy } from "./algorithms/greedy";
-import { dijkstra } from "./algorithms/dijkstra";
-import { getPath } from "./algorithms/animate";
+import { bfs, astar, dijkstra, greedy, getPath } from "./algorithms";
 
 const state = {
   board: [],
