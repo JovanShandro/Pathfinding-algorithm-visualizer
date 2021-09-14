@@ -31,9 +31,9 @@
             and walls. At last, the 'Weights' button can be used to control the
             weights. The weight of each square will show up only if the chosen
             algorithm is weighted. Pressing the button will change its color to
-            green, red, or black. If it is green you can add weights by clicking
+            green, red, or white. If it is green you can add weights by clicking
             on the squares. If the color is red, you can remove a weight from
-            the square by clicking on it. If the color is black, then you can
+            the square by clicking on it. If the color is white, then you can
             add walls in the board.
           </p>
           <img src="assets/navbar.png" alt />
@@ -52,7 +52,7 @@
         <div class="rules-4">
           <h3>Walls</h3>
           <p>
-            When the 'Weights' button in the navbar is black, you can add walls
+            When the 'Weights' button in the navbar is white, you can add walls
             using the mouse.
           </p>
           <img src="assets/walls.gif" alt />

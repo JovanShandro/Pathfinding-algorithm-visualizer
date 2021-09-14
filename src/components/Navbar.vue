@@ -65,6 +65,7 @@ export default {
 
 <style scoped>
 nav {
+  font-size: 16px;
   min-width: 700px;
   border-radius: 25px;
   background-color: black;
