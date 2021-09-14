@@ -6,13 +6,13 @@ Make sure to check it on a big screen for the best experience!
 ## Build Setup
 
 ```bash
-npm install # to install dependencies
+yarn # to install dependencies
 
-#serve with hot reload at localhost:3000
-npm run dev
+# serve with hot reload at localhost:3000
+yarn dev
 
 # build for production
-npm run build
+yarn build
 ```
 
 **Or directly play with it** [here](https://blissful-shirley-0a890a.netlify.com/)
