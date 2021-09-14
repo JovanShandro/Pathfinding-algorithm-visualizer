@@ -2,3 +2,5 @@ node_modules
 .vscode
 dist
 build
+cypress/videos
+cypress/screenshots
