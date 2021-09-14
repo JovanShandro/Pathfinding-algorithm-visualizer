@@ -10,9 +10,21 @@
         <option value="bfs">BFS</option>
       </select>
 
-      <button @click="visualize"><i class="fas fa-play"></i></button>
-      <button @click="resetBoard"><i class="fas fa-redo-alt"></i></button>
-      <button @click="clearBoard"><i class="fas fa-eraser"></i></button>
+      <button @click="visualize">
+        <vue-custom-tooltip label="Start the animation">
+          <i class="fas fa-play"></i
+        ></vue-custom-tooltip>
+      </button>
+      <button @click="resetBoardAndUpdateCols">
+        <vue-custom-tooltip label="Refresh board to initial state">
+          <i class="fas fa-redo-alt"></i>
+        </vue-custom-tooltip>
+      </button>
+      <button @click="clearBoard">
+        <vue-custom-tooltip label="Remove painted squares">
+          <i class="fas fa-eraser"></i>
+        </vue-custom-tooltip>
+      </button>
       <button
         v-if="algorithmChoice === 'dijkstra'"
         @click="updateWeightMode"
@@ -45,13 +57,8 @@ export default {
     },
   },
   methods: {
-    ...mapMutations([
-      "updateWeightMode",
-      "clearBoard",
-      "resetBoard",
-      "setAlgorithm",
-    ]),
-    ...mapActions(["visualize"]),
+    ...mapMutations(["updateWeightMode", "clearBoard", "setAlgorithm"]),
+    ...mapActions(["visualize", "resetBoardAndUpdateCols"]),
   },
 };
 </script>
@@ -69,6 +76,12 @@ nav {
   transform: translateX(-50%);
   padding: 0 10px;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+span {
 }
 
 .add {
@@ -77,10 +90,6 @@ nav {
 
 .sub {
   color: rgb(228, 164, 164) !important;
-}
-
-span {
-  float: right;
 }
 
 select {
@@ -102,34 +111,22 @@ option {
   margin-top: 5px;
 }
 
-span > * {
+span > button,
+select {
   color: white;
   background: none;
   border: none;
   text-transform: uppercase;
-  height: 50.1px;
+  height: 56.1px;
   margin: 0 10px;
   cursor: pointer;
   outline: none;
 }
-span > *:hover {
-  color: white;
-}
-
-span > *::-moz-focus-inner {
-  border: 0;
-}
 
 h3 {
   margin: 10px;
-  float: left;
 }
 
-nav::after {
-  content: "";
-  display: block;
-  clear: both;
-}
 .add {
   color: lightgreen !important;
 }

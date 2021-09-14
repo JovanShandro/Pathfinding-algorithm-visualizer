@@ -17,7 +17,7 @@
 <script>
 import Square from "../components/Square.vue";
 import Navbar from "../components/Navbar.vue";
-import Undraggable from '../components/Undraggable.vue'
+import Undraggable from "../components/Undraggable.vue";
 import { mapState, mapMutations } from "vuex";
 
 export default {

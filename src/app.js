@@ -1,3 +1,4 @@
+import Tooltip from "@adamdehaven/vue-custom-tooltip";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
@@ -6,6 +7,10 @@ import "./index.css";
 import routes from "./routes";
 import boardStore from "./store";
 
+Vue.use(Tooltip, {
+  color: "#000",
+  background: "#fff",
+});
 Vue.use(VueRouter);
 Vue.use(Vuex);
 

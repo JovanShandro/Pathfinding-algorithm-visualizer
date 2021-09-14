@@ -33,12 +33,12 @@ const mutations = {
     state.visualizationDone = newValue;
   },
   // Update square
-  updateSquare(state, {row, col, ...updates }) {
-    state.board[row][col] = Object.assign(state.board[row][col], updates)
+  updateSquare(state, { row, col, ...updates }) {
+    state.board[row][col] = Object.assign(state.board[row][col], updates);
   },
   // Update the endpoints state
   updateEndpoints(state, updates) {
-    state.endpoints = Object.assign(state.endpoints, updates)
+    state.endpoints = Object.assign(state.endpoints, updates);
   },
   // Update number of columns to match screen width
   updateCols(state) {
@@ -137,6 +137,14 @@ const mutations = {
 };
 
 const actions = {
+  /*
+   * Return board to original state while also
+   * adjusting board to screen width (without changing endpoints)
+   */
+  resetBoardAndUpdateCols({ commit }) {
+    commit("updateCols");
+    commit("resetBoard");
+  },
   // Run the algorithm and start the visualization
   visualize({ commit, state }) {
     // Make sure board is cleared
@@ -172,7 +180,7 @@ const actions = {
         if (shortestPath.length !== 1)
           setTimeout(() => {
             this.dispatch("animateShortestPath", shortestPath);
-          }, 5 * i);
+          }, 10 * i);
         return;
       }
       // Animate visited squares
@@ -181,7 +189,7 @@ const actions = {
         if (node !== start && node !== target) {
           state.board[node.row][node.col].makeVisible = true;
         }
-      }, 5 * i);
+      }, 10 * i);
     }
   },
   //Animate the shortest path
