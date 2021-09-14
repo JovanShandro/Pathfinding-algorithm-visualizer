@@ -4,9 +4,8 @@
   "description": "Pathfinding algorithms' visualizer",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV='development' webpack-dev-server",
-    "build": "NODE_ENV='production' webpack -p"
+    "build": "NODE_ENV='production' webpack -p && cp -r assets build/"
   },
   "author": "Jovan Shandro",
   "license": "ISC",
