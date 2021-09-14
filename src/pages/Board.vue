@@ -11,11 +11,11 @@
           <option value="bfs">BFS</option>
         </select>
 
-        <button @click="visualize">Visualize</button>
+        <button @click="() => visualize(choice)">Visualize</button>
         <button @click="resetBoard">Reset</button>
         <button @click="clearBoard">Clear</button>
         <button
-          @click="ctrlWeightMode"
+          @click="updateWeightMode"
           :class="{ add: weightMode == 1, sub: weightMode == -1 }"
         >
           weights
@@ -31,11 +31,6 @@
           :square="board[row - 1][col - 1]"
           :id="'square-' + (row - 1) + '-' + (col - 1)"
           :choice="choice"
-          @add-weight="changeWeight"
-          @mouse-down="handleMouseDown"
-          @mouse-up="handleMouseUp"
-          @mouse-out="handleMouseOut"
-          @mouse-enter="handleMouseEnter"
         />
       </div>
     </div>
@@ -44,18 +39,7 @@
 
 <script>
 import Square from "../components/Square.vue";
-import { bus } from "../events/eventbus";
-import { bfs } from "../algorithms/bfs";
-import { astar } from "../algorithms/astar";
-import { greedy } from "../algorithms/greedy";
-import { dijkstra } from "../algorithms/dijkstra";
-import { animateVisited, getPath } from "../algorithms/animate";
-import {
-  onMouseEnter,
-  onMouseOut,
-  onMouseDown,
-  onMouseUp,
-} from "../events/mouseEvents";
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
   components: {
@@ -64,199 +48,30 @@ export default {
   data() {
     return {
       choice: "",
-      board: [],
-      rows: 40,
-      cols: 60,
-      mouseIsPressed: false,
-      endpoints: {
-        start: { row: 13, col: 13 },
-        target: { row: 13, col: 23 },
-        startIsPressed: false,
-        targetIsPressed: false,
-      },
-      weightMode: 0,
-      visualizationDone: false,
     };
   },
+  computed: {
+      ...mapState(["rows", "cols", "board", "weightMode"]),
+  },
   methods: {
+    ...mapMutations([
+      'updateWeightMode', 
+      "clearBoard", 
+      "resetBoard",
+      "updateCols"
+    ]),
+    ...mapActions([
+      "visualize", 
+    ]),
+
     // To not allow the board to be dragged
     prevent(event) {
       event.preventDefault();
     },
-
-    ctrlWeightMode() {
-      if (this.weightMode !== 1) {
-        this.weightMode++;
-      } else {
-        this.weightMode = -1;
-      }
-    },
-
-    changeWeight(coordinates) {
-      if (this.weightMode === 0) return;
-      const { row, col } = coordinates;
-      if (this.weightMode === 1 && this.board[row][col].weight < 100)
-        this.board[row][col].weight++;
-      else if (this.weightMode === -1 && this.board[row][col].weight > 1)
-        this.board[row][col].weight--;
-    },
-
-    handleMouseDown(coordinates) {
-      if (this.visualizationDone || this.weightMode) return;
-      onMouseDown(coordinates, this.board, this.endpoints);
-      this.mouseIsPressed = true;
-    },
-
-    handleMouseEnter(coordinates) {
-      if (this.visualizationDone || !this.mouseIsPressed) return;
-      onMouseEnter(coordinates, this.board, this.endpoints);
-    },
-
-    handleMouseOut(coordinates) {
-      onMouseOut(coordinates, this.endpoints);
-    },
-
-    handleMouseUp(coordinates) {
-      if (this.visualizationDone) return;
-      const newSquare = this.searchEmptySquare(this.endpoints.startIsPressed);
-      onMouseUp(coordinates, this.board, this.endpoints, newSquare);
-      this.mouseIsPressed = false;
-    },
-
-    searchEmptySquare(flag) {
-      for (
-        let i = flag ? 0 : this.rows - 1;
-        flag ? i < this.rows : i >= 0;
-        flag ? i++ : i--
-      ) {
-        for (
-          let j = flag ? 0 : this.cols - 1;
-          flag ? j < this.cols : j >= 0;
-          flag ? j++ : j--
-        ) {
-          if (!this.board[i][j].isWall) {
-            return this.board[i][j];
-          }
-        }
-      }
-    },
-
-    visualize() {
-      if (this.visualizationDone) this.clearBoard();
-      const start = this.board[this.endpoints.start.row][
-        this.endpoints.start.col
-      ];
-      const target = this.board[this.endpoints.target.row][
-        this.endpoints.target.col
-      ];
-
-      // Run the algorithm
-      let visited;
-      if (this.choice === "dijkstra")
-        visited = dijkstra(this.board, start, target);
-      else if (this.choice === "astar")
-        visited = astar(this.board, start, target);
-      else if (this.choice === "greedy")
-        visited = greedy(this.board, start, target);
-      else if (this.choice === "bfs") visited = bfs(this.board, start, target);
-      else return;
-
-      // Animate
-      const path = getPath(target);
-      animateVisited(visited, path, start, target);
-      this.visualizationDone = true;
-    },
-
-    clearBoard() {
-      for (const row of this.board) {
-        for (let square of row) {
-          square = Object.assign(square, {
-            g: Infinity, // for A*
-            f: Infinity, // for A*
-            distance: Infinity, // for dijkstra, greedy and bfs
-            makeVisible: false,
-            isPath: false,
-            isVisited: false,
-            weight: 1,
-            previousNode: null,
-          });
-        }
-      }
-      this.visualizationDone = false;
-    },
-
-    resetBoard() {
-      this.board = [];
-      for (let i = 0; i < this.rows; i++) {
-        let currentRow = [];
-        for (let j = 0; j < this.cols; j++) {
-          currentRow.push({
-            row: i,
-            col: j,
-            isWall: false,
-            isPath: false,
-            g: Infinity, // for A*
-            f: Infinity, // for A*
-            distance: Infinity, // for dijkstra, greedy and bfs
-            makeVisible: false,
-            isVisited: false,
-            previousNode: null,
-            weight: 1,
-            isStart:
-              i == this.endpoints.start.row &&
-              j == this.endpoints.start.col,
-            isTarget:
-              i == this.endpoints.target.row &&
-              j == this.endpoints.target.col,
-          });
-        }
-        this.board.push(currentRow);
-        this.visualizationDone = false;
-      }
-    },
   },
-
   created() {
-    this.cols = Math.floor(window.innerWidth / 25);
+    this.updateCols();
     this.resetBoard();
-
-    // Event to show changes in board
-    bus.$on("make-visible", (i, j) => {
-      this.board[i][j].makeVisible = true;
-    });
-
-    // Event to show the shortest path
-    bus.$on("show-path", (i, j) => {
-      this.board[i][j].isPath = true;
-      this.board[i][j].makeVisible = false;
-    });
-
-    // Event to control the start and target squares
-    bus.$on("ctrl", (i, j, flag, value) => {
-      if (this.board[i][j].isWall) {
-        return;
-      }
-
-      if (flag) {
-        if (value === "start") {
-          if (this.board[i][j].isTarget) return;
-          this.board[i][j].isStart = true;
-          this.endpoints = Object.assign(this.endpoints, {
-            start: { row: i, col: j },
-          });
-        } else if (value === "target") {
-          if (this.board[i][j].isStart) return;
-
-          this.board[i][j].isTarget = true;
-          this.endpoints = Object.assign(this.endpoints, {
-            target: { row: i, col: j },
-          });
-        }
-      } else {
-        if (value === "start") this.board[i][j].isStart = false;
-        else if (value === "target") this.board[i][j].isTarget = false;
-      }
-    });
   },
 };
 </script>

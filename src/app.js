@@ -1,17 +1,25 @@
-import Vue from 'vue';
-import App from './App.vue';
+import Vue from "vue";
 import VueRouter from "vue-router";
-import routes from './routes';
-import './index.css'; 
+import Vuex from "vuex";
+import App from "./App.vue";
+import "./index.css";
+import routes from "./routes";
+import boardStore from "./store";
 
 Vue.use(VueRouter);
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  ...boardStore,
+});
 
 const router = new VueRouter({
   routes,
-  mode: "history"
+  mode: "history",
 });
 
 new Vue({
-    render: (el) => el(App),
-    router,
-}).$mount('#app');
+  render: (el) => el(App),
+  router,
+  store,
+}).$mount("#app");

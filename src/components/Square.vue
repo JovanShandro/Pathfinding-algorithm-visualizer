@@ -6,7 +6,7 @@
       target: square.isTarget,
       visited: square.isVisited && square.makeVisible,
       wall: square.isWall,
-      path: square.isPath
+      path: square.isPath,
     }"
     @click="clicked"
     @mousedown="onMouseDown"
@@ -20,46 +20,63 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+
 export default {
   props: {
     square: Object,
-    choice: String
+    choice: String,
   },
   data() {
     return {
       coordinates: { row: this.square.row, col: this.square.col },
-      weighted: this.choice === "dijkstra"
+      weighted: this.choice === "dijkstra",
     };
   },
+  computed: {
+    ...mapState(["visualizationDone", "weightMode", "mouseIsPressed"]),
+  },
   methods: {
+    ...mapMutations([
+      "updateWeight",
+      "setMouseIsPressed",
+      "onMouseDownHandler",
+      "onMouseUpHandler",
+    ]),
+    ...mapActions(["onMouseOutHandler", "onMouseEnterHandler"]),
     onMouseUp() {
-      this.$emit("mouse-up", this.coordinates);
+      if (this.visualizationDone) return;
+      this.onMouseUpHandler(this.coordinates);
+      this.setMouseIsPressed(false);
     },
     onMouseOut() {
-      this.$emit("mouse-out", this.coordinates);
+      this.onMouseOutHandler(this.coordinates);
     },
     onMouseEnter() {
-      this.$emit("mouse-enter", this.coordinates);
+      if (this.visualizationDone || !this.mouseIsPressed) return;
+      this.onMouseEnterHandler(this.coordinates);
     },
     onMouseDown() {
-      this.$emit("mouse-down", this.coordinates);
+      if (this.visualizationDone || this.weightMode) return;
+      this.onMouseDownHandler(this.coordinates);
+      this.setMouseIsPressed(true);
     },
     clicked() {
-      this.$emit("add-weight", this.coordinates);
-    }
+      this.updateWeight(this.coordinates);
+    },
   },
   watch: {
     choice: {
       immediate: true,
       handler(val, oldVal) {
         this.weighted = val === "dijkstra";
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
-<style >
+<style>
 .square {
   display: inline-block;
   width: 25px;
@@ -82,31 +99,37 @@ export default {
   color: transparent;
 }
 
-.start, .target {
+.start,
+.target {
   position: relative;
 }
 
-.start::after, .target::after {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-    transform: scale(0.9);
+.start::after,
+.target::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: scale(0.9);
 }
 
 .start::after {
-    background: radial-gradient(circle at 50% 50%, var(--main-start-color), #000);
+  background: radial-gradient(circle at 50% 50%, var(--main-start-color), #000);
 }
 
 .target::after {
-    background: radial-gradient(circle at 50% 50%, var(--main-target-color), #000);
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--main-target-color),
+    #000
+  );
 }
 
 .wall {
-  background-color: var( --wall-color );
+  background-color: var(--wall-color);
 }
 
 .path {
