@@ -10,22 +10,23 @@
         <option value="bfs">BFS</option>
       </select>
 
-      <button @click="visualize">
+      <button data-testid="visualize" @click="visualize">
         <vue-custom-tooltip label="Start the animation">
-          <i class="fas fa-play"></i
-        ></vue-custom-tooltip>
+          <i class="fas fa-play"> </i>
+        </vue-custom-tooltip>
       </button>
-      <button @click="resetBoardAndUpdateCols">
+      <button data-testid="reset" @click="resetBoardAndUpdateCols">
         <vue-custom-tooltip label="Refresh board to initial state">
           <i class="fas fa-redo-alt"></i>
         </vue-custom-tooltip>
       </button>
-      <button @click="clearBoard">
+      <button data-testid="clear" @click="clearBoard">
         <vue-custom-tooltip label="Remove painted squares">
           <i class="fas fa-eraser"></i>
         </vue-custom-tooltip>
       </button>
       <button
+        data-testid="weight"
         v-if="algorithmChoice === 'dijkstra'"
         @click="updateWeightMode"
         :class="{ add: weightMode == 1, sub: weightMode == -1 }"
