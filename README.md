@@ -3,7 +3,7 @@
 Inspired by Clement Mihailescu's youtube video (can be found [here](https://www.youtube.com/watch?v=msttfIHHkak))
 Make sure to check it on a big screen for the best experience!
 
-## Build Setup
+## How to run
 
 ```bash
 yarn # to install dependencies
@@ -15,4 +15,18 @@ yarn dev
 yarn build
 ```
 
-**Or directly play with it** [here](https://blissful-shirley-0a890a.netlify.com/)
+## Tests 
+Cypress was used for testing. Once the development server is running, you can run the tests via:
+```bash
+y test
+```
+
+Or you can open the Cypress Test Runner via:
+```bash
+y test:open
+```
+
+
+## Deployed app
+
+**Directly play with the live app** [here](https://blissful-shirley-0a890a.netlify.com/)
